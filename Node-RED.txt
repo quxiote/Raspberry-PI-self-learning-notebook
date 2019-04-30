@@ -1,0 +1,111 @@
+#remove old version : https://www.cnblogs.com/xiyuan2016/p/7878304.html 
+sudo apt-get remove nodejs
+
+#get latest version
+wget https://nodejs.org/dist/v10.15.3/node-v10.15.3-linux-armv6l.tar.xz 
+
+
+apt-get
+    还有一种就是shell提示的apt-get方式，我之前就被这种方式坑了。。。强烈不推荐啊
+
+sudo apt-get install nodejs
+sudo apt-get install npm
+    这么装完你会发现,node命令好使，nodejs命令可以用。。。
+
+
+卸载安装node npm (Mac linux )
+1. 卸载node npm
+      (1) 先卸载 npm:
+sudo npm uninstall npm -g
+　　(2) 然后卸载 Node.js.
+　　(2.1) 如果是 Ubuntu 系统并使用 apt-get 安装的，可以使用命令：
+sudo apt-get remove nodejs
+　　(2.2)源文件安装的node, 卸载方式：首先cd到解压后到目录：　
+sudo make uninstall
+     (2.3)mac 平台下brew安装的node（brew install node）, 卸载方式：
+　　1.使用 brew uninstall node 命令卸载
+　　2.在终端下执行命令，卸载node其他相关目录
+　　sudo rm -rf /usr/local/{lib/node{,/.npm,_modules},bin,share/man}/{npm*,node*,man1/node*}
+　　3.执行 brew doctor 命令，查看还有哪些与node、npm相关的目录，并删除。之前因为缺少这一步骤，导致一直未完全卸载。
+2. 安装node npm（Linux. Mac）
+Node.js 官方下载页面：https://nodejs.org/en/download/current/
+我选择的是最新版本，下载地址是：https://nodejs.org/dist/v6.3.1/node-v6.3.1.tar.gz
+一般第三方的软件在 Linux 上的安装目录是 /usr/local,使用 wget 下载源码（地址自己注意替换）：
+1	sudo wget http://nodejs.org/dist/v0.10.30/node-v0.10.30.tar.gz
+解压缩：
+1	tar xzvf node-v* && cd node-v*
+编译：
+1
+2	./configure
+make
+这个过程可能会很慢，等待完成，然后安装：
+1	sudo make install
+如果一切顺利，Node.js 就安装好了，使用 node -v 查看一下版本。
+【卸载的话，保留原文件，sudomake uninstall ; 如果没有保留原文件的话，只能手动删除】
+(2)安装npm:
+npm install
+ npm 5.3.0 有坑，更新npm命令
+1	npm install npm@latest -g
+ https://www.npmjs.com/get-npm
+
+
+
+#proxy config
+https://blog.csdn.net/wilsonke/article/details/54285952
+
+1.这是较常用的方法，修改/etc/apt/apt.conf,加入以下内容：
+
+Acquire::http::Proxy "http://wilson_ke:password@10.0.0.1:63333";
+Acquire::https::Proxy "http://wilson_ke:password@10.0.0.1:63333";
+Acquire::ftp::Proxy "http://wilson_ke:password@10.0.0.1:63333";
+
+
+
+2.修改/etc/bash.bashrc,加入以下内容:
+
+export http_proxy=http://wilson_ke:password@10.0.0.1:63333
+export https_proxy=http://wilson_ke:password@10.0.0.1:63333
+export ftp_proxy=http://wilson_ke:password@10.0.0.1:63333
+
+
+
+3.修改/etc/environment，加入以下内容:
+
+http_proxy=http://wilson_ke:password@10.0.0.1:63333
+https_proxy=http://wilson_ke:password@10.0.0.1:63333
+ftp_proxy=http://wilson_ke:password@10.0.0.1:63333
+
+
+
+4.修改~/.bashrc
+
+http_proxy=http://wilson_ke:password@10.0.0.1:63333
+https_proxy=http://wilson_ke:password@10.0.0.1:63333
+ftp_proxy=http://wilson_ke:password@10.0.0.1:63333
+--------------------- 
+作者：wilsonke 
+来源：CSDN 
+原文：https://blog.csdn.net/wilsonke/article/details/54285952 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+
+
+
+三，apt-get 常用实例
+apt-cache search packagename 搜索包
+apt-cache show packagename 获取包的相关信息，如说明、大小、版本等
+apt-get install packagename 安装包
+apt-get install packagename --reinstall 重新安装包
+apt-get -f install 修复安装”-f = –fix-missing”
+apt-get remove packagename 删除包
+apt-get remove packagename --purge 删除包，包括删除配置文件等
+apt-get update 更新源
+apt-get upgrade 更新已安装的包
+apt-get dist-upgrade 升级系统
+apt-get dselect-upgrade 使用 dselect 升级
+apt-cache depends packagename 了解使用依赖
+apt-cache rdepends packagename 是查看该包被哪些包依赖
+apt-get build-dep packagename 安装相关的编译环境
+apt-get source packagename 下载该包的源代码
+apt-get clean 清理无用的包
+apt-get autoclean 清理无用的包
+apt-get check 检查是否有损坏的依赖
